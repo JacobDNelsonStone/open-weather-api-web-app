@@ -1,0 +1,20 @@
+* {
+    font-family: 'Cinzel', serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Prompt', sans-serif;
+}
+
+header {
+    font-family: 'Prompt', sans-serif;
+    text-align: center;
+    font-size: 48px;
+    position: relative;
+    background-color: aquamarine;
+    width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.d-flex {
+    background-color: aquamarine;
+}
