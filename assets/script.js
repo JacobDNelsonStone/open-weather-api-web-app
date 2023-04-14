@@ -3,7 +3,14 @@ var sample
   I am loading the sample data via another script tag on the index.html page, so I have that data 
   available here as a global variable. It was named sample in the other file so we'll use that here.
 */
+const APIKey = "b8fd273274a528d392087bd0cf821d1e";
 
+var cityName = $('#search-input').val();
+var popularCityOpt = $('#dropdownMenuButton').val()
+
+var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`;
+
+var weatherFetchURLnumTwo = `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKey}`;
 
 // This is the array of hour blocks: 8 per day, for a total of 40.
 const daysInForecast = sample.list 

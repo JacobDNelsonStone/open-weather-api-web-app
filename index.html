@@ -15,23 +15,46 @@
 
     <header>5-Day Weather Forecast Dashboard</header>
 
-    <div class="container-lg inline-row w-100">
-        <div class="align-items-start container-md bg-light mt-5 ml-4 w-25 pb-5">
-            <form id="search-form" class="form">
-                <h1 class="pb-3">Search your city name to get the 5 Day Forecast!</h1>
-                <input id="search-input" class="form-input w-100 pb-3" type="text" placeholder="City Name">
-                <button class="btn btn-info btn-block pb-3">Get Forecast</button>
-            </form>
+    <section class="container-lg row">
+        <!-- <div class="bg-light col-lg-3 col-md-4 mt-5 ml-4 pb-5">
         </div>
-        <div class="flex-column w-100 container-lg align-items-center">
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui quos cupiditate vel quas cumque temporibus excepturi accusamus ea nisi provident voluptatem nulla animi magnam ex mollitia accusantium labore, ab tempore.</p>
+        <div class="col-12 col-lg-9 col-md-8 ml-3 bg-light">
+            
+            
+        </div> -->
+        <div class="row justify-content-around ml-1 mr-1 ">
+            <div class="flex-column col-12 ml-1 col-md-4 col-lg-3 p-2 bg-light">
+                <form id="search-form" class="form">
+                    <h1 class="pb-3">Search your city name to get the 5 Day Forecast!</h1>
+                    <input id="search-input" class="w-100 pb-3 align-center" type="text" placeholder="City Name">
+                    <div class="dropdown">
+                        <select class="btn btn-secondary dropdown-toggle w-100" type="select" id="dropdownMenuButton"    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Popular Cities"> 
 
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <option value="" disabled selected>Popular Cities</option>
+                                <option value="Los Angeles" class="dropdown-item" >Los Angeles</option>
+                                <option value="New York" class="dropdown-item" >New York</option>
+                                <option value="Chicago" class="dropdown-item" >Chicago</option>
+                            </div>
+                        </select>
+                    </div>
+                      
+                    <button class="btn btn-info btn-block pb-3">Get Forecast</button>
+                </form>
+            </div>
+            <div class="bg-light p-2 col-12 col-md-8 col-lg-8">
+                <h3 class="forecast-text">Forecast</h3>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui quos cupiditate vel quas cumque temporibus excepturi accusamus ea nisi provident voluptatem nulla animi magnam ex mollitia accusantium labore, ab tempore.</p>
 
+                <!-- divs for 5 weather info cards go here -->
+
+            </div>
         </div>
-    </div>    
+    </section>    
 
-
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+    crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="./assets/sample.js"></script>
     <script type="text/javascript" src="./assets/script.js"></script>
