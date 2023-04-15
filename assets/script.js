@@ -1,21 +1,26 @@
 var sample 
-/*
-I am loading the sample data via another script tag on the index.html page, so I have that data 
-available here as a global variable. It was named sample in the other file so we'll use that here.
-*/
+
 const APIKey = "b8fd273274a528d392087bd0cf821d1e";
 
 var searchButton = document.querySelector('.btn-block');
 
-var cityName = $('#search-input').val();
+var cityInputField = document.getElementById('#search-input');
 
-var popularCityOpt = $('#dropdownMenuButton').val()
+// var popularCityOpt = $('#dropdownMenuButton').val();
 
-var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=Minneapolis&appid=${APIKey}`;
+searchButton.addEventListener('click', function(event){
+  event.preventDefault();
+  console.log(event.target);
 
+  makeAPICall()
+
+})
 
 function makeAPICall(){
+
+  var cityName = cityInputField.value;
   
+  var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`;
   fetch(weatherFetchURLnumOne)
     .then(function (response) {
       if(!response.ok){
@@ -78,9 +83,4 @@ Want to see why arrow functions are cool? Combined with an array method you have
 yet, we can do all this work in one line of code. We will show you array.filter() later!
 */ 
 
-searchButton.addEventListener('click', function(event){
-  event.preventDefault();
-  console.log(event.target);
-  makeAPICall()
 
-})

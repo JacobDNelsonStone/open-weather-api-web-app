@@ -20,6 +20,8 @@ header {
     display: flex;
     flex-wrap: wrap;
     padding: 15px;
+    min-height: fit-content;
+    height: 450px;
 }
 
 .forecast-text {
