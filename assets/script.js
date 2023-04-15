@@ -6,6 +6,12 @@ var searchButton = document.querySelector('.btn-block');
 
 var cityInputField = document.getElementById('#search-input');
 
+var recentCities = document.getElementById('#recent-cities');
+
+var recentCityButton = document.getElementById("#recent-cities");
+
+var cityChoiceArray = []
+
 // var popularCityOpt = $('#dropdownMenuButton').val();
 
 searchButton.addEventListener('click', function(event){
@@ -16,11 +22,25 @@ searchButton.addEventListener('click', function(event){
 
 })
 
+recentCityButton.addEventListener('click', function(e){
+  e.preventDefault()
+  console.log(e.target);
+  var recentCity  = recentCityButton.textContent;
+  cityChoiceArray.splice(0, 1, recentCity);
+  console.log(cityChoiceArray)
+  makeAPICall()
+  return cityChoiceArray[0];
+
+
+})
+
 function makeAPICall(){
 
-  var cityName = cityInputField.value;
-  
+  var cityName = cityChoiceArray[0];
+
+  // getting city name and entering it into api call url
   var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`;
+  //fetch function number 1 to get the initial city data
   fetch(weatherFetchURLnumOne)
     .then(function (response) {
       if(!response.ok){
@@ -29,11 +49,12 @@ function makeAPICall(){
       
       return response.json();
     })
+    // taking the json response and converting it into an array of objects 
     .then( function (data) {
       console.log(data);
       var lat = data.city.coord.lat;
       var long = data.city.coord.lon;
-
+      //second api call to fetch the lat and lon from api call 1 to get weather data we will use
       var weatherFetchURLnumTwo = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${APIKey}`;
 
         fetch(weatherFetchURLnumTwo ) 
@@ -41,46 +62,31 @@ function makeAPICall(){
             return response.json();
 
           })
+          // again taking the json and convefting it into array of objects, sepcifically for the 5 day forecast we would like
             .then(function (data) {
+              // gary gave us this for loop to use 
               for( let i=0; i<40; i=i+8 ){
 
                 const daysInForecast = data.list 
 
-                const futureForecastArr = [] 
+                const futureForecastArray = [] 
 
-                futureForecastArr.push( daysInForecast[i])
+                futureForecastArray.push( daysInForecast[i])
 
-                console.log(futureForecastArr)
+                console.log(futureForecastArray)
 
-                const newForecastArr2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
-                console.log(newForecastArr2)
+                const newForecastArray2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
+                console.log(newForecastArray2)
 
-                return newForecastArr2
+                return newForecastArray2
 
               }
+
+
 
         })
     })
 
 }
-
-// This is the array of hour blocks: 8 per day, for a total of 40.
-
-/*
-Each date object has a property called "dt", which is a Unix timestamp for the date and time 
-of that object's data. The first one is 1681333200.
-*/ 
-
-// Create a new array to hold one day block per forecast day.
-
-// iterate over the 40 blocks, but we will do them 8 at a time, so that we get one per day.
-
-// We now have a new array with one record for each day!
-
-
-/* 
-Want to see why arrow functions are cool? Combined with an array method you haven't learned 
-yet, we can do all this work in one line of code. We will show you array.filter() later!
-*/ 
 
 
