@@ -17,6 +17,10 @@ var cityChoiceArray = []
 searchButton.addEventListener('click', function(event){
   event.preventDefault();
   console.log(event.target);
+  var cityTypefield = cityInputField.value;
+
+  cityChoiceArray.splice(0, 1, cityTypefield);
+  console.log(cityChoiceArray)  
 
   makeAPICall()
 
@@ -35,8 +39,26 @@ recentCityButton.addEventListener('click', function(e){
 })
 
 function makeAPICall(){
+  
+  // var recentCity  = recentCityButton.textContent;
+  // cityChoiceArray.splice(0, 1, recentCity);
+  // console.log(cityChoiceArray)
+
+  // var cityInputField = document.getElementById('#search-input');
 
   var cityName = cityChoiceArray[0];
+  
+  // if( cityTypefield == null && recentCity != null ){
+  //   cityName = recentCity;
+  //   console.log(cityName)
+  // } 
+  // if( recentCity == null && cityTypefield != null ) {
+  //   cityName = cityTypefield;
+  //   console.log(cityName)
+  // } else {
+  //   alert("You must type in a city :]");
+  //   location.reload();
+  // }
 
   // getting city name and entering it into api call url
   var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`;
