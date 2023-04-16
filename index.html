@@ -24,9 +24,9 @@
         </div> -->
         <main class="row">
             <div class="flex-column col-12 ml-2 col-md-4 col-xl-2 p-1 bg-dark">
-                <form id="#search-form" class="form">
+                <form id="search-form" class="form">
                     <h1 class="pb-3 text-light">Search your city name to get the 5 Day Forecast!</h1>
-                    <input id="#search-input" class="w-100 pb-3 align-center" type="text" placeholder="City Name">
+                    <input id="search-input" class="w-100 pb-3 align-center" type="text" placeholder="City Name">
                     <div class="dropdown">
                         <!-- <select class="btn btn-secondary dropdown-toggle w-100" type="select" id="dropdownMenuButton"    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" placeholder="Popular Cities"> 
 
@@ -39,10 +39,10 @@
                         </select> -->
                     </div>
                       
-                    <button class="btn btn-info btn-block pb-3">Get Forecast</button>
+                    <button id="searchButton" class="btn btn-info btn-block pb-3">Get Forecast</button>
 
-                    <div id="#recent-cities" class="flex-column">
-                        <button id="#recent-cities" class="btn btn-info btn-block pb-3">Atlanta</button>
+                    <div class="flex-column">
+                        <button id="recent-cities" class="btn btn-info btn-block pb-3">Atlanta</button>
                         <!-- <p id="#search-input" type="text" class="recentCitiesButton">Atlanta</p> -->
                         
     
@@ -54,7 +54,7 @@
                 <!-- <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Qui quos cupiditate vel quas cumque temporibus excepturi accusamus ea nisi provident voluptatem nulla animi magnam ex mollitia accusantium labore, ab tempore.</p> -->
 
                 <!-- divs for 5 weather info cards go here -->
-                <div class="forecastContainer row justify-content-around">
+                <div id="dailyForecast" class="forecastContainer row justify-content-around">
                     <!-- <div id="#CurrForecastCard" class="CurrForecastCard bg-light">
                         <div id="#forecastInfo" class="curr-forecast-info">
                         
@@ -103,7 +103,11 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" 
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
     crossorigin="anonymous"></script>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
     <script type="text/javascript" src="./assets/sample.js"></script>
     <script type="text/javascript" src="./assets/script.js"></script>
 </body>
