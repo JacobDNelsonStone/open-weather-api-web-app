@@ -12,6 +12,10 @@ var recentCityButton = document.getElementById("#recent-cities");
 
 var cityChoiceArray = []
 
+var currForecastCard = document.getElementsByClassName('.forecastContainer');
+
+
+
 // var popularCityOpt = $('#dropdownMenuButton').val();
 
 searchButton.addEventListener('click', function(event){
@@ -38,6 +42,7 @@ recentCityButton.addEventListener('click', function(e){
 
 })
 
+
 function makeAPICall(){
   
   if(cityChoiceArray == "" ){
@@ -54,7 +59,7 @@ function makeAPICall(){
 
   // getting city name and entering it into api call url
   var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}&units=imperial`;
-  //fetch function number 1 to get the initial city data
+  //fetch function number 1 to get the 5 day forecast 
   fetch(weatherFetchURLnumOne)
     .then(function (response) {
       if(!response.ok){
@@ -96,27 +101,39 @@ function makeAPICall(){
       return response.json();
 
     })
-    // again taking the json and convefting it into array of objects, sepcifically for the 5 day forecast we would like
+    // again taking the json and convefting it into array of objects, sepcifically for the current day forecast
     .then(function (data) {
-      console.log(data)
-      for( let i=0; i<40; i=i+8 ){
 
-        const daysInForecast = data.list 
-  
-        const currForecastArray = [] 
-  
-        currForecastArray.push(daysInForecast[i])
-  
-        console.log(currForecastArray)
-  
-        const newForecastArray2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
-        console.log(newForecastArray2)
-  
-        return newForecastArray2
-  
-  
-      }
+      console.log(data)
+    
+      const currForecast = data 
+
+      console.log(currForecast)
+
+      populateCurrForecast()
+        
+      
     })
+
+    function populateCurrForecast(data){
+  
+      var currForecastIcon = data.weather.icon;
+      var currForecastWind = data.wind.speed;
+      var currForecastTemp = data.main.temp;
+      var currForecastHumid = data.main.humidity;
+      var CurrForecastDataEl = $(
+        `<div id="#CurrForecastCard" class="CurrForecastCard bg-light">
+          <div id="#forecastInfo" class="curr-forecast-info">
+            ${currForecastIcon}<br>
+            ${currForecastTemp}<br>
+            ${currForecastWind}<br>
+            ${currForecastHumid}
+          </div>
+        </div> `);
+      CurrForecastDataEl.append(currForecastCard);
+      
+    }
+    
     
 }
 

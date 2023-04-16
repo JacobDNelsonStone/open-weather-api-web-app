@@ -75,3 +75,14 @@ main {
 .forecast-info {
     align-items: baseline;
 }
+
+.CurrForecastCard {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.curr-forecast-info {
+    justify-content: center;
+}
