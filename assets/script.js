@@ -53,7 +53,7 @@ function makeAPICall(){
   var cityName = cityChoiceArray[0];
 
   // getting city name and entering it into api call url
-  var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}`;
+  var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}&units=imperial`;
   //fetch function number 1 to get the initial city data
   fetch(weatherFetchURLnumOne)
     .then(function (response) {
@@ -68,41 +68,39 @@ function makeAPICall(){
       console.log(data);
       var lat = data.city.coord.lat;
       var long = data.city.coord.lon;
-      //second api call to fetch the lat and lon from api call 1 to get weather data we will use
-      var weatherFetchURLnumTwo = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${APIKey}&units=imperial`;
 
-        fetch(weatherFetchURLnumTwo ) 
-          .then(function (response) {
-            return response.json();
+      // gary gave us this for loop to use 
+    for( let i=0; i<40; i=i+8 ){
 
-          })
-          // again taking the json and convefting it into array of objects, sepcifically for the 5 day forecast we would like
-            .then(function (data) {
-              // gary gave us this for loop to use 
-              for( let i=0; i<40; i=i+8 ){
+      const daysInForecast = data.list 
 
-                const daysInForecast = data.list 
+      const futureForecastArray = [] 
 
-                const futureForecastArray = [] 
+      futureForecastArray.push(daysInForecast[i])
 
-                futureForecastArray.push(daysInForecast[i])
+      console.log(futureForecastArray)
 
-                console.log(futureForecastArray)
+      const newForecastArray2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
+      console.log(newForecastArray2)
 
-                const newForecastArray2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
-                console.log(newForecastArray2)
-
-                return newForecastArray2
-
-                
-              }
+      return newForecastArray2
 
 
-
-
-        })
+    }
     })
 
+  var weatherFetchURLnumTwo = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}&units=imperial`;
+
+  fetch(weatherFetchURLnumTwo ) 
+    .then(function (response) {
+      return response.json();
+
+    })
+    // again taking the json and convefting it into array of objects, sepcifically for the 5 day forecast we would like
+    .then(function (data) {
+      console.log(data)
+    })
+    
 }
 
 
