@@ -27,7 +27,7 @@ main {
 
 .row {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     padding: 15px;
     min-height: fit-content;
     height: 500px;
@@ -49,9 +49,15 @@ main {
     height: 50px;
 }
 
+.bg-dark {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .forecastContainer {
     justify-content: space-around;
     height: 400px;
+    min-height: 400px;
     
 }
 
@@ -64,4 +70,8 @@ main {
 
 .forecastContainer .forecastCards{
     min-width: 18%;
+}
+
+.forecast-info {
+    align-items: baseline;
 }

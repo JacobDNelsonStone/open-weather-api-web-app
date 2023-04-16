@@ -99,6 +99,23 @@ function makeAPICall(){
     // again taking the json and convefting it into array of objects, sepcifically for the 5 day forecast we would like
     .then(function (data) {
       console.log(data)
+      for( let i=0; i<40; i=i+8 ){
+
+        const daysInForecast = data.list 
+  
+        const currForecastArray = [] 
+  
+        currForecastArray.push(daysInForecast[i])
+  
+        console.log(currForecastArray)
+  
+        const newForecastArray2 = data.list.filter( (_dayObj, idx) => idx % 8 === 0)
+        console.log(newForecastArray2)
+  
+        return newForecastArray2
+  
+  
+      }
     })
     
 }
