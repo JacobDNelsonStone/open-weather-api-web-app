@@ -28,12 +28,17 @@ var recentCityDiv = $('#recentContainer');
 
 
 function setLocalStorage() {
+
+  
   localStorage.setItem('recentCities', JSON.stringify(cityNameLocalStorageArray));
   console.log(localStorage);
 }
 
 
 function getLocalStorage() {
+  if( cityNameLocalStorageArray == null){
+    cityNameLocalStorageArray = []
+  }
   cityNameLocalStorageArray = JSON.parse(localStorage.getItem('recentCities'))
 
 
@@ -71,8 +76,12 @@ function populateFutureForecast(futureForecastArray) {
           `);
 
     console.log(FutureForecastCard);
-    console.log(FutureForecastDataEl)
-
+    console.log(FutureForecastDataEl);
+    // FutureForecastCard.removeChildren();
+      
+    // if( FutureForecastCard.children != null ){
+    //   FutureForecastCard.children().forEach(child => child.remove())
+    // }
     FutureForecastCard.append(FutureForecastDataEl);
   }
 }
@@ -95,40 +104,17 @@ function populateCurrForecast(currForecast) {
   </div>`);
 
   console.log(currForecastCard);
-  //  currForecastCard.removeChildren()
-  //  currForecastCard.children().forEach(child => child.remove())
+  // currForecastCard.removeChildren()
+  // if ( currForecastCard.children != null ){
+  //   currForecastCard.children().forEach(child => child.remove())
+  // }
   currForecastCard.append(CurrForecastDataEl);
 
-  makeRecentCityButtons(cityName)
-  setLocalStorage()
+  makeRecentCityButtons(cityChoiceArray[0])
+  setLocalStorage(cityChoiceArray[0])
 }
 
-searchButton.click(function (event) {
-  event.preventDefault();
-  console.log(event.target);
-  var cityTypefield = cityInputField.val();
 
-  cityChoiceArray.splice(0, 1, cityTypefield);
-  console.log(cityChoiceArray)
-  FutureForecastCard.innerHTML = '';
-  currForecastCard.innerHTML = '';
-  makeAPICall()
-
-})
-
-recentCityButton.click(function (e) {
-  e.preventDefault()
-  console.log(e.target);
-  var recentCity = recentCityButton.text();
-
-  cityChoiceArray.splice(0, 1, recentCity);
-  console.log(cityChoiceArray)
-  FutureForecastCard.outerHTML = '';
-  currForecastCard.outerHTML = '';
-  makeAPICall()
-
-
-})
 
 
 function makeAPICall() {
@@ -138,15 +124,7 @@ function makeAPICall() {
     alert("You must select a city");
     location.reload()
   }
-  // var recentCity  = recentCityButton.textContent;
-  // cityChoiceArray.splice(0, 1, recentCity);
-  // console.log(cityChoiceArray)
-
-  // var cityInputField = document.getElementById('#search-input');
-
   var cityName = cityChoiceArray[0];
-
-  cityNameLocalStorageArray.push(cityName);
 
   // getting city name and entering it into api call url
   var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}&units=imperial`;
@@ -187,8 +165,9 @@ function makeAPICall() {
       console.log(data)
       populateCurrForecast(data)
   })
-
+  
 }
+
 
 // If I load the page and there's local storage...
 // I want to show all the searched items as buttons
@@ -197,6 +176,37 @@ function makeAPICall() {
 // V V V V V PAGE JUST LOADED / RELOADED HERE AND NOW  V V V V V
 
 getLocalStorage()
-cityNameLocalStorageArray.forEach(city => makeRecentCityButtons(city))
+
+// if( cityNameLocalStorageArray != null) {
+//   cityNameLocalStorageArray.forEach(name => makeRecentCityButtons(name))
+
+// }
+
+recentCityButton.click(function (e) {
+  e.preventDefault()
+  console.log(e.target);
+  var recentCity = recentCityButton.text();
+
+  cityChoiceArray.splice(0, 1, recentCity);
+  console.log(cityChoiceArray)
+  setLocalStorage(cityChoiceArray[0])
+  FutureForecastCard.innerHTML = '';
+  currForecastCard.innerHTML = '';
+  makeAPICall()
 
 
+})
+
+searchButton.click(function (event) {
+  event.preventDefault();
+  console.log(event.target);
+  var cityTypefield = cityInputField.val();
+
+  cityChoiceArray.splice(0, 1, cityTypefield);
+  console.log(cityChoiceArray)
+  setLocalStorage(cityChoiceArray[0])
+  FutureForecastCard.innerHTML = '';
+  currForecastCard.innerHTML = '';
+  makeAPICall()
+
+})
