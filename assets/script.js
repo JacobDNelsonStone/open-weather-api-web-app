@@ -14,6 +14,10 @@ var currForecastCard = $('#dailyForecast');
 
 var FutureForecastCard = $('#futureContainer');
 
+var CurrForecastDiv = $('#wholeDailyContainer');
+
+var FutureForecastDiv = $('#wholeFutureContainer');
+
 var currentDay = dayjs();
 
 const futureForecastArray = []
@@ -26,10 +30,45 @@ var cityNameLocalStorageArray = []
 
 var recentCityDiv = $('#recentContainer');
 
+searchButton.click(function (event) {
+  event.preventDefault();
+  console.log(event.target);
+  FutureForecastDiv.innerHTML = '';
+  CurrForecastDiv.innerHTML = "";
+  var cityTypefield = cityInputField.val();
+  cityChoiceArray.splice(0, 1, cityTypefield);
+  console.log(cityChoiceArray)
+  setLocalStorage(cityChoiceArray[0])
+
+  makeAPICall()
+})
+
+recentCityButton.click(function (e) {
+  e.preventDefault()
+  console.log(e.target);
+  var recentCity = recentCityButton.text();
+
+  cityChoiceArray.splice(0, 1, recentCity);
+  console.log(cityChoiceArray)
+  setLocalStorage(cityChoiceArray[0])
+
+  makeAPICall()
+})
+
+function createLocalStorageButtons(names){
+  
+  for(var i = 0; i>cityNameLocalStorageArray.length; i++){
+    var localStorageCityButton = $(
+      `<button id="recent-cities" class="btn btn-info btn-block mt-1 pt-2 pb-3">${names[i]}</button>
+    `);
+    recentCityDiv.append(localStorageCityButton);
+  }
+}
 
 function setLocalStorage() {
-
-  
+  if( cityNameLocalStorageArray == null){
+    cityNameLocalStorageArray = []
+  }
   localStorage.setItem('recentCities', JSON.stringify(cityNameLocalStorageArray));
   console.log(localStorage);
 }
@@ -39,7 +78,11 @@ function getLocalStorage() {
   if( cityNameLocalStorageArray == null){
     cityNameLocalStorageArray = []
   }
+
   cityNameLocalStorageArray = JSON.parse(localStorage.getItem('recentCities'))
+  console.log(cityNameLocalStorageArray)
+  createLocalStorageButtons(cityNameLocalStorageArray);
+
 
 
 }
@@ -49,6 +92,7 @@ function makeRecentCityButtons(name) {
   var localStorageCityButton = $(
     `<button id="recent-cities" class="btn btn-info btn-block mt-1 pt-2 pb-3">${name}</button>
   `);
+  cityNameLocalStorageArray.push(name);
   recentCityDiv.append(localStorageCityButton);
 
 }
@@ -87,6 +131,7 @@ function populateFutureForecast(futureForecastArray) {
 }
 
 function populateCurrForecast(currForecast) {
+  
   var currForecastIcon = currForecast.weather[0].icon;
   var weatherIcon = `https://openweathermap.org/img/wn/${currForecastIcon}@2x.png`
   var currForecastWind = currForecast.wind.speed;
@@ -114,9 +159,6 @@ function populateCurrForecast(currForecast) {
   setLocalStorage(cityChoiceArray[0])
 }
 
-
-
-
 function makeAPICall() {
 
 
@@ -125,7 +167,6 @@ function makeAPICall() {
     location.reload()
   }
   var cityName = cityChoiceArray[0];
-
   // getting city name and entering it into api call url
   var weatherFetchURLnumOne = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${APIKey}&units=imperial`;
   //fetch function number 1 to get the 5 day forecast 
@@ -139,17 +180,13 @@ function makeAPICall() {
       console.log(data);
 
       getNumberOfDays(data)
+      futureForecastArray = []
       function getNumberOfDays() {  // gary gave us this for loop to use 
         for (let i = 0; i < 40; i = i + 8) {
-
           const daysInForecast = data.list
-
           futureForecastArray.push(daysInForecast[i])
-
-
         }
         console.log(futureForecastArray)
-
       }
       populateFutureForecast(futureForecastArray)
     })
@@ -163,6 +200,7 @@ function makeAPICall() {
     // again taking the json and convefting it into array of objects, sepcifically for the current day forecast
     .then(function (data) {
       console.log(data)
+       
       populateCurrForecast(data)
   })
   
@@ -173,40 +211,7 @@ function makeAPICall() {
 // I want to show all the searched items as buttons
 // I want to show the most recent search as data on the page
 
+
+
 // V V V V V PAGE JUST LOADED / RELOADED HERE AND NOW  V V V V V
-
 getLocalStorage()
-
-// if( cityNameLocalStorageArray != null) {
-//   cityNameLocalStorageArray.forEach(name => makeRecentCityButtons(name))
-
-// }
-
-recentCityButton.click(function (e) {
-  e.preventDefault()
-  console.log(e.target);
-  var recentCity = recentCityButton.text();
-
-  cityChoiceArray.splice(0, 1, recentCity);
-  console.log(cityChoiceArray)
-  setLocalStorage(cityChoiceArray[0])
-  FutureForecastCard.innerHTML = '';
-  currForecastCard.innerHTML = '';
-  makeAPICall()
-
-
-})
-
-searchButton.click(function (event) {
-  event.preventDefault();
-  console.log(event.target);
-  var cityTypefield = cityInputField.val();
-
-  cityChoiceArray.splice(0, 1, cityTypefield);
-  console.log(cityChoiceArray)
-  setLocalStorage(cityChoiceArray[0])
-  FutureForecastCard.innerHTML = '';
-  currForecastCard.innerHTML = '';
-  makeAPICall()
-
-})
